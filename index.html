@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SacredBonds: Biblical Marriage Mastery</title>
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --primary-light: #ebf8ff;
+            --secondary: #38b2ac;
+            --background: #f7fafc;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --white: #ffffff;
+            --error: #e53e3e;
+            --error-light: #fed7d7;
+            --success: #38a169;
+            --success-light: #c6f6d5;
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+        body { background-color: var(--background); color: var(--text-dark); line-height: 1.7; }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .btn {
+            background-color: var(--primary); color: var(--white); border: none;
+            padding: 14px 28px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;
+            transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn:hover { background-color: #2c5282; transform: translateY(-2px); box-shadow: 0 6px 8px rgba(0,0,0,0.15); }
+        .btn-secondary { background-color: var(--text-light); }
+        .btn-secondary:hover { background-color: #4a5568; }
+        
+        /* Layouts */
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--card-shadow); margin-bottom: 30px; }
+        .logo { font-size: 28px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .lang-select { padding: 10px 15px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 16px; font-weight: bold; outline: none; cursor: pointer; }
+
+        /* Login Screen */
+        .login-card { background: var(--white); padding: 50px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); max-width: 450px; margin: 80px auto; text-align: center; }
+        .login-card h2 { color: var(--primary); font-size: 32px; margin-bottom: 10px; }
+        .form-group { margin-bottom: 25px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 16px; transition: border-color 0.2s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); outline: none; }
+        .error-msg { color: var(--error); font-size: 14px; margin-top: 8px; font-weight: bold; display: none; }
+
+        /* Dashboard */
+        .dashboard-header { text-align: center; margin-bottom: 40px; }
+        .dashboard-header h1 { font-size: 36px; color: var(--primary); }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center; transition: transform 0.3s; border-top: 5px solid var(--primary); }
+        .card:hover { transform: translateY(-5px); }
+        .card-icon { font-size: 50px; margin-bottom: 20px; }
+        .card h3 { font-size: 24px; margin-bottom: 15px; }
+
+        /* Study Material */
+        .study-content { background: var(--white); padding: 50px; border-radius: var(--border-radius); box-shadow: var(--card-shadow); }
+        .study-content h1 { color: var(--primary); font-size: 36px; border-bottom: 3px solid var(--primary-light); padding-bottom: 10px; margin: 40px 0 20px; }
+        .study-content h2 { color: var(--secondary); font-size: 28px; margin: 30px 0 15px; }
+        .study-content h3 { color: var(--text-dark); font-size: 22px; margin: 20px 0 10px; }
+        .study-content p, .study-content li { font-size: 18px; margin-bottom: 15px; color: #4a5568; }
+        .study-content ul { margin-left: 25px; margin-bottom: 25px; }
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: var(--primary); color: var(--white); font-size: 18px; }
+        tr:nth-child(even) { background-color: var(--primary-light); }
+        .example-box { background-color: #fffaf0; padding: 20px; border-left: 5px solid #dd6b20; border-radius: 0 8px 8px 0; margin: 20px 0; font-style: italic; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .faq-box { margin-bottom: 20px; background: var(--primary-light); padding: 20px; border-radius: 8px; }
+        .faq-box strong { display: block; font-size: 19px; color: var(--primary); margin-bottom: 8px; }
+
+        /* Duolingo Style Quiz */
+        .quiz-container { max-width: 800px; margin: 0 auto; background: var(--white); padding: 40px; border-radius: 20px; box-shadow: var(--card-shadow); }
+        .quiz-header { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+        .progress-bar { flex-grow: 1; background: #e2e8f0; height: 18px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--success); width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .question-text { font-size: 26px; font-weight: 700; margin-bottom: 30px; color: var(--text-dark); }
+        .options-grid { display: grid; gap: 15px; }
+        .option-btn { background: var(--white); border: 3px solid #e2e8f0; padding: 20px; border-radius: 15px; font-size: 18px; cursor: pointer; text-align: left; transition: all 0.2s; font-weight: 600; color: var(--text-dark); }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-light); transform: scale(1.01); }
+        .option-btn.correct { background: var(--success-light); border-color: var(--success); color: #22543d; }
+        .option-btn.wrong { background: var(--error-light); border-color: var(--error); color: #742a2a; }
+        .option-btn:disabled { cursor: not-allowed; }
+        
+        .quiz-footer { margin-top: 30px; display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 2px solid #e2e8f0; min-height: 80px; }
+        .feedback-message { font-size: 22px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+        .results-container { text-align: center; }
+        .results-circle { width: 150px; height: 150px; border-radius: 50%; background: var(--primary-light); border: 8px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; color: var(--primary); margin: 0 auto 30px; }
+
+        @media (max-width: 768px) {
+            .study-content { padding: 25px; }
+            .login-card { margin: 40px 15px; padding: 30px; }
+            header { flex-direction: column; gap: 15px; }
+            .question-text { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header id="main-header" class="hidden">
+            <div class="logo">💍 SacredBonds</div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <select id="lang-selector" class="lang-select" onchange="changeLanguage()">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="hi">🇮🇳 Hindi (हिन्दी)</option>
+                    <option value="hin">🗣️ Hinglish</option>
+                </select>
+                <button class="btn btn-secondary" onclick="logout()" id="btn-logout">Logout</button>
+            </div>
+        </header>
+
+        <div id="login-view">
+            <div class="login-card">
+                <h2>Welcome</h2>
+                <p style="margin-bottom: 25px; color: var(--text-light);">Master the Biblical Design of Marriage</p>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="user-name" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="user-dob" required>
+                        <div id="age-error" class="error-msg">❌ You must be 18 or older to access this material.</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="user-gender" required>
+                            <option value="">Select...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 18px;">Enter Dashboard</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="dashboard-view" class="hidden">
+            <div class="dashboard-header">
+                <h1 id="welcome-text">Welcome, User!</h1>
+                <p style="font-size: 18px; color: var(--text-light); margin-top: 10px;" id="dash-subtitle">Track your preparation and understanding of God's design for marriage.</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-icon">📖</div>
+                    <h3 id="card1-title">Study Guide</h3>
+                    <p id="card1-desc">Read the comprehensive Biblical basis of marriage, roles, and preparation.</p>
+                    <button class="btn" style="margin-top: 20px; width: 100%;" onclick="nav('study-view')" id="btn-read">Start Reading</button>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3 id="card2-title">Knowledge Test</h3>
+                    <p id="card2-desc">Test your understanding with our interactive 30-question assessment.</p>
+                    <button class="btn" style="margin-top: 20px; width: 100%;" onclick="startQuiz()" id="btn-test">Take the Test</button>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3 id="card3-title">Your Progress</h3>
+                    <p style="font-size: 18px; margin-top: 15px;" id="card3-desc">Latest Test Score:</p>
+                    <div style="font-size: 32px; font-weight: bold; color: var(--primary); margin-top: 10px;" id="dash-score">-- / 30</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="study-view" class="hidden">
+            <button class="btn btn-secondary" style="margin-bottom: 25px;" onclick="nav('dashboard-view')" id="btn-back-study">← Back to Dashboard</button>
+            <div class="study-content" id="study-content-container">
+                </div>
+            <button class="btn" style="margin-top: 30px; width: 100%;" onclick="nav('dashboard-view')" id="btn-finish-study">Finish Reading & Return</button>
+        </div>
+
+        <div id="quiz-view" class="hidden">
+            <button class="btn btn-secondary" style="margin-bottom: 20px;" onclick="nav('dashboard-view')" id="btn-exit-quiz">← Exit Quiz</button>
+            
+            <div class="quiz-container" id="quiz-active">
+                <div class="quiz-header">
+                    <span style="font-weight: bold; font-size: 18px; color: var(--text-light);" id="q-counter">1/30</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quiz-progress"></div>
+                    </div>
+                </div>
+                <div id="question-text" class="question-text">Question goes here?</div>
+                <div class="options-grid" id="options-grid">
+                    </div>
+                
+                <div class="quiz-footer">
+                    <div id="feedback-area" class="feedback-message"></div>
+                    <button class="btn hidden" id="next-btn" onclick="nextQuestion()">Continue ➔</button>
+                </div>
+            </div>
+
+            <div class="quiz-container hidden results-container" id="quiz-results">
+                <div style="font-size: 60px; margin-bottom: 20px;">🏆</div>
+                <h2 style="font-size: 36px; color: var(--primary); margin-bottom: 15px;" id="res-title">Test Complete!</h2>
+                <div class="results-circle" id="final-score-display">0/30</div>
+                <p style="font-size: 20px; margin: 20px 0; color: var(--text-light);" id="res-desc">You have successfully completed the marriage assessment.</p>
+                <button class="btn" style="font-size: 20px; padding: 15px 40px;" onclick="nav('dashboard-view')" id="btn-return-dash">Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+/* ================= DATABASE: STUDY GUIDE CONTENT ================= */
+// Huge JSON structure holding English, Hindi, and Hinglish content separately for maximum detail.
+const studyContent = {
+    en: `
+        <h1>The Biblical Basis and Design of Marriage</h1>
+        
+        <h2>1. What is Marriage?</h2>
+        <p>According to the Biblical perspective, marriage is defined by four key characteristics:</p>
+        <ul>
+            <li><strong>A Sacred Relationship:</strong> It is a holy and set-apart bond established by God Himself. It is not merely a civil contract or a societal convenience; it is a spiritual covenant.</li>
+            <li><strong>Open Among Witnesses:</strong> It is a public commitment made before God, family, friends, and society. Secret marriages lack accountability and blessing.</li>
+            <li><strong>Permanent:</strong> It is a lifelong covenant intended to last until the end of life. (Mark 10:9 - "What therefore God has joined together, let not man put asunder.")</li>
+            <li><strong>Sexual Union:</strong> It involves keeping the marriage bed pure. God designed sexual intimacy exclusively for marriage. (Hebrews 13:4 - "Marriage should be honored by all, and the marriage bed kept pure, for God will judge the adulterer and all the sexually immoral.")</li>
+        </ul>
+        <div class="example-box">
+            <strong>🚘 The Driving License Analogy:</strong><br>
+            Imagine handing the keys of a Ferrari to a 10-year-old who has never read a traffic rule book. A crash is inevitable. Similarly, pre-marital preparation and counseling are like getting a driving license. Without understanding God's rules for communication, conflict, and intimacy, you are highly likely to "crash" your marriage.
+        </div>
+
+        <h2>2. The Creator’s Authority (The Car Analogy)</h2>
+        <p>Every time someone buys a complex machine like a car, they operate it under the authority of the maker's manual. If the maker says put petrol, you don't pour water into the tank.</p>
+        <ul>
+            <li><strong>The Original Design (Within Design):</strong> A man marrying a woman and living according to biblical instructions. <em>Result: True peace, harmony, joy, and pleasure.</em></li>
+            <li><strong>Fake Designs (Out of Design):</strong> If you live even an inch outside God's design, you are using a "fake" design. Examples include: live-in relationships (no covenant), having children before marriage, polygamy, adultery, and same-sex unions. Doing this voids God's "warranty" and invites destruction.</li>
+        </ul>
+
+        <h2>3. The Purpose of Marriage</h2>
+        <ul>
+            <li><strong>To Glorify God:</strong> Marriage is meant to reflect the unconditional love between Christ and the Church (Ephesians 5).</li>
+            <li><strong>To Accomplish a Greater Purpose:</strong> Two are better than one. Together, a couple can serve God's kingdom far better than they could individually.</li>
+            <li><strong>Personal Growth & Companionship:</strong> God said, "It is not good for man to be alone" (Gen 2:18). It cures loneliness, helps you become a better version of yourself through sanctification, and creates a secure environment for raising children.</li>
+        </ul>
+
+        <h1>Roles, Responsibilities, and Differences</h1>
+        
+        <h2>1. The Biblical Order of the Family</h2>
+        <p>The family structure acts as an umbrella of protection. The biblical flow of authority is: <strong>Christ ➔ Husband ➔ Wife ➔ Children</strong>. If the husband steps out from under Christ's umbrella, he exposes his entire family to spiritual rain.</p>
+
+        <h2>2. Headship, Submission, and Co-Stewardship</h2>
+        <ul>
+            <li><strong>Headship (Husband):</strong> Headship does NOT mean dictatorship. It means sacrificial leadership. A husband must love his wife just as Christ loved the church and gave Himself up for her.</li>
+            <li><strong>Submission (Wife):</strong> This is a voluntary yielding in love to the husband's leadership, trusting God's order. It is about respect, not inferiority.</li>
+            <li><strong>Co-Stewardship:</strong> Men and women are 100% equal in value and dignity (Genesis 1:27). They are co-managers of the home.</li>
+        </ul>
+        <div class="example-box">
+            <strong>Real World Quote:</strong> "Husbands need a head massage (respect and acknowledgment of their leadership), and wives need a heart massage (unconditional love, listening, and emotional care)." — Dr. Tony Evans
+        </div>
+
+        <h2>3. Understanding Differences: Men vs. Women</h2>
+        <p>God wired men and women differently to complement each other, not compete.</p>
+        <table>
+            <tr><th>Trait / Need</th><th>Men (Husbands)</th><th>Women (Wives)</th></tr>
+            <tr><td><strong>Primary Attraction</strong></td><td>Visual (What they see)</td><td>Emotional & Security (How they are cared for)</td></tr>
+            <tr><td><strong>Deepest Need</strong></td><td>Respect (To feel honored)</td><td>Love (To feel cherished and emotionally connected)</td></tr>
+            <tr><td><strong>Stress Response</strong></td><td>Want to pull away to a "cave" to fix the problem logically</td><td>Want to talk through the problem to process emotions</td></tr>
+            <tr><td><strong>Communication</strong></td><td>Use fewer words; focused on facts and solutions</td><td>Detail-oriented; multi-taskers; use communication to bond</td></tr>
+            <tr><td><strong>Intimacy</strong></td><td>High physical desire (Avenue to emotional connection)</td><td>High need for safety and romance (Pre-requisite for physical intimacy)</td></tr>
+        </table>
+
+        <h2>4. Design of Marriage: Original vs. Fake Designs</h2>
+        <div class="example-box">
+            <strong>🚘 The Driving License Analogy:</strong><br>
+            Pre-marital preparation and counseling are exactly like getting a driving license. If you attempt to drive a vehicle without understanding the rules of the road, a crash is highly inevitable. In the same way, a husband and wife must commit to live strictly within the original design of marriage; they cannot arbitrarily design their own terms without expecting a catastrophic failure.
+        </div>
+        
+        <h3 style="color: var(--success);">✅ The Original Design (Within Design)</h3>
+        <p><strong>Core Definition:</strong> A biological man marrying a biological woman, living explicitly according to the operational laws and designs laid out in the Bible.</p>
+        <p><em>💡 NOTE: Only by living strictly according to this original design can a couple experience true peace, harmony, joy, and profound pleasure in marriage.</em></p>
+        
+        <h3 style="color: var(--error);">❌ Fake Designs (Out of Design)</h3>
+        <p style="color: var(--error);"><strong>Warning:</strong> If you live even a single inch outside the boundary of God's design, you are operating on your own self-made design, which automatically makes it a fake design rather than God's design.</p>
+        <p><strong>Examples of Out-of-Design:</strong></p>
+        <ul>
+            <li><strong>Live-in Relationships:</strong> Cohabiting together as partners without the holy, legal, and public covenant of marriage.</li>
+            <li><strong>Children Before Marriage:</strong> Having children out of wedlock, bypassing the protective spiritual order established for family building.</li>
+            <li><strong>Many Affairs:</strong> Multiple emotional or physical relationships, breaking the absolute law of monogamous exclusivity.</li>
+            <li><strong>Polygamy:</strong> Accumulating multiple spouses (more wives), which systematically deviates from the 'one flesh' baseline.</li>
+            <li><strong>Same-Sex Relationships:</strong> Romantic or marital configurations outside the biological male-female binary (e.g., Lesbian relations, BF-GF roles within identical genders).</li>
+        </ul>
+
+        <h1>Finding the Right Life Partner</h1>
+        
+        <h2>1. The Right Mindset</h2>
+        <p><strong>Rule of Thumb:</strong> Become the right person before trying to find the right person (Romans 12:2). Work on your own character flaws first.</p>
+
+        <h2>2. Non-Negotiables (DO NOT COMPROMISE)</h2>
+        <ul>
+            <li><strong>Must be a Believer:</strong> 2 Corinthians 6:14 says, "Do not be unequally yoked with unbelievers." Marrying a non-Christian will divide your home spiritually.</li>
+            <li><strong>No Dowry:</strong> The dowry system is built on greed and extortion. A biblical marriage is built on mutual giving, not financial demands.</li>
+            <li><strong>Separate Living (Leave and Cleave):</strong> Genesis 2:24 commands a man to leave his father and mother. You must establish your own independent household to prevent toxic in-law interference.</li>
+        </ul>
+
+        <h2>3. Negotiables (Flexible)</h2>
+        <p>You can compromise on: Education level, State/Language/Cultural background, Church denomination (as long as core doctrines align), Family financial background, Height, and physical features.</p>
+
+        <h1>The Assessment and Courtship Process</h1>
+        <h2>1. 4-Tier Compatibility</h2>
+        <p>During conversations (calls/meetings), look for alignment in:</p>
+        <ul>
+            <li><strong>Spiritual:</strong> Do you pray together? Do you both love God above all?</li>
+            <li><strong>Intellectual:</strong> Can you hold meaningful conversations?</li>
+            <li><strong>Emotional:</strong> How do they handle anger, stress, or sadness?</li>
+            <li><strong>Physical:</strong> Is there a natural, healthy attraction?</li>
+        </ul>
+
+        <h2>2. Total Preparation (Don't just plan a wedding, plan a marriage)</h2>
+        <ul>
+            <li><strong>Financial:</strong> Learn to budget. Disclose all debts before marriage. Understand who will work and how money will be managed.</li>
+            <li><strong>Physical:</strong> Get health checkups. Discuss expectations regarding sex openly but purely.</li>
+            <li><strong>Mental/Emotional:</strong> Seek healing from past traumas. Read books on conflict resolution.</li>
+            <li><strong>Overcoming Bad Habits:</strong> <em>Example:</em> If someone struggles with pornography, uncontrollable anger, or laziness, they MUST seek counseling and accountability groups <em>before</em> marriage. Marriage does not magically cure addiction; it magnifies it.</li>
+        </ul>
+
+        <h1>Reference Materials</h1>
+        <ul>
+            <li><em>The 5 Love Languages</em> by Gary Chapman (Understanding how your partner receives love)</li>
+            <li><em>Love & Respect</em> by Emerson Eggerichs (The core needs of men and women)</li>
+            <li><em>Men Are Like Waffles, Women Are Like Spaghetti</em> by Bill & Pam Farrel</li>
+            <li><em>Answers for Your Marriage</em> by Bruce & Carol Britten</li>
+            <li><strong>Websites/Apps:</strong> Focus on the Family (focusonthefamily.com), FamilyLife, YouVersion Bible App (Marriage plans)</li>
+        </ul>
+
+        <h1>Frequently Asked Questions (20 Detailed FAQs)</h1>
+        <div class="faq-box"><strong>1. How long should courtship be?</strong> Long enough to see the person in all seasons (happy, angry, stressed), usually 6 to 18 months. Not so long that sexual temptation becomes unbearable.</div>
+        <div class="faq-box"><strong>2. What if my parents demand/offer dowry?</strong> Stand firm on Biblical principles. Explain gently but firmly that your marriage is a covenant, not a business transaction.</div>
+        <div class="faq-box"><strong>3. Can I marry a non-believer with the hope they will convert?</strong> No. This is called "missionary dating" and violates 2 Cor 6:14. God's command is clear.</div>
+        <div class="faq-box"><strong>4. Should past sexual sins be confessed?</strong> Yes. Confess major past relationships and sins before engagement to build a foundation of absolute truth, but avoid unnecessarily graphic details.</div>
+        <div class="faq-box"><strong>5. How do we handle living with parents?</strong> The Bible says "Leave and Cleave". While you must honor parents, your primary allegiance shifts to your spouse. Independent living is highly recommended.</div>
+        <div class="faq-box"><strong>6. Does a large age gap matter?</strong> The Bible gives no age rule. It is a negotiable. However, consider energy levels, generational mindsets, and life stages.</div>
+        <div class="faq-box"><strong>7. How do I know God's will?</strong> God's will is found through His Word, prayer, wise Christian counsel, and circumstances. He will never lead you to marry someone who contradicts Scripture.</div>
+        <div class="faq-box"><strong>8. What if we argue a lot during courtship?</strong> Frequent harsh arguments are a red flag. If you cannot resolve conflict peacefully now, it will be worse in marriage. Seek counseling.</div>
+        <div class="faq-box"><strong>9. Do I need to disclose my financial debt?</strong> Absolutely. Hiding debt is a form of deceit. Enter marriage with total financial transparency.</div>
+        <div class="faq-box"><strong>10. How to overcome a pornography habit before marriage?</strong> Get an accountability partner, use blocking software, seek pastoral counseling, and rely on the Holy Spirit. Do not enter marriage hiding this addiction.</div>
+        <div class="faq-box"><strong>11. Are long-distance courtships effective?</strong> They can be, but they require intentional communication (video calls) and making time to meet in person to observe real-life behavior.</div>
+        <div class="faq-box"><strong>12. How to set boundaries with in-laws?</strong> The husband must lead in establishing polite but firm boundaries, ensuring his wife feels prioritized over his parents.</div>
+        <div class="faq-box"><strong>13. Can we marry if we are from different church denominations?</strong> Yes, this is negotiable, provided you both agree on core foundational truths (Salvation by grace, authority of Scripture) and decide beforehand where you will attend church.</div>
+        <div class="faq-box"><strong>14. What if I feel no physical attraction initially?</strong> While character is most important, physical attraction is a required tier of compatibility. Sometimes attraction grows with emotional connection, but don't force it if it's completely absent.</div>
+        <div class="faq-box"><strong>15. How do we deal with the fear of divorce?</strong> Build your marriage on the rock of Christ. Pre-marital counseling drastically reduces divorce rates by giving you tools for conflict.</div>
+        <div class="faq-box"><strong>16. Should mental health issues be disclosed?</strong> Yes. Conditions like depression, anxiety, or bipolar disorder must be shared so the partner can make an informed choice and learn how to support you.</div>
+        <div class="faq-box"><strong>17. Is pre-marital counseling mandatory?</strong> While not legally mandatory, it is biblically foolish to skip it (Proverbs 15:22). It is essential.</div>
+        <div class="faq-box"><strong>18. Can a wife pursue a demanding career?</strong> Yes. Proverbs 31 describes a highly industrious woman. However, both partners must ensure careers do not destroy family priorities.</div>
+        <div class="faq-box"><strong>19. Does "submission" mean a wife has no voice?</strong> Absolutely not. A biblical wife is a vital counselor and co-manager. Headship means the husband takes ultimate responsibility, not that he makes all decisions alone.</div>
+        <div class="faq-box"><strong>20. Should we discuss having children before marriage?</strong> Yes! Discuss if, when, and how many children you want, and how you plan to raise and discipline them biblically.</div>
+    `,
+    hi: `
+        <h1>विवाह का बाइबिल आधार और रूपरेखा (Biblical Design of Marriage)</h1>
+        
+        <h2>1. विवाह क्या है?</h2>
+        <p>बाइबिल के दृष्टिकोण के अनुसार, विवाह की चार प्रमुख विशेषताएँ हैं:</p>
+        <ul>
+            <li><strong>एक पवित्र रिश्ता (Sacred Relationship):</strong> यह स्वयं परमेश्वर द्वारा स्थापित एक पवित्र बंधन है। यह केवल एक सामाजिक अनुबंध (contract) नहीं है।</li>
+            <li><strong>गवाहों के सामने (Open Among Witnesses):</strong> यह परमेश्वर, परिवार और समाज के सामने किया गया एक सार्वजनिक वादा है। गुप्त शादियों में परमेश्वर की आशीष नहीं होती।</li>
+            <li><strong>स्थायी (Permanent):</strong> यह जीवन भर का साथ है। (मरकुस 10:9 - "इसलिए जिसे परमेश्वर ने जोड़ा है, उसे मनुष्य अलग न करे।")</li>
+            <li><strong>शारीरिक मिलन (Sexual Union):</strong> विवाह के बिस्तर को पवित्र रखना। परमेश्वर ने शारीरिक अंतरंगता को केवल विवाह के लिए बनाया है। (इब्रानियों 13:4)</li>
+        </ul>
+        <div class="example-box">
+            <strong>🚘 ड्राइविंग लाइसेंस का उदाहरण:</strong><br>
+            कल्पना करें कि आप किसी 10 साल के बच्चे को फेरारी की चाबी दे दें जिसे ट्रैफिक नियमों का कोई ज्ञान नहीं। दुर्घटना निश्चित है! इसी तरह, विवाह से पहले की काउंसलिंग (तैयारी) ड्राइविंग लाइसेंस लेने जैसी है। इसके बिना आपकी शादी के "क्रैश" होने की संभावना बहुत अधिक है।
+        </div>
+
+        <h2>2. सृष्टिकर्ता का अधिकार (कार का उदाहरण)</h2>
+        <p>जब कोई कार खरीदता है, तो वह उसे निर्माता (Maker) के मैनुअल के अनुसार चलाता है। यदि उसमें पेट्रोल डालना है, तो आप पानी नहीं डालते।</p>
+        <ul>
+            <li><strong>मूल डिज़ाइन (Within Design):</strong> एक पुरुष और महिला का बाइबिल के अनुसार विवाह करना। <em>परिणाम: सच्ची शांति, खुशी और आनंद।</em></li>
+            <li><strong>नकली डिज़ाइन (Out of Design):</strong> परमेश्वर के डिज़ाइन से एक इंच भी बाहर जाना। उदाहरण: लिव-इन रिलेशनशिप, शादी से पहले बच्चे, बहुविवाह, समलैंगिकता। ऐसा करने से परमेश्वर की "वारंटी" खत्म हो जाती है और जीवन में विनाश आता है।</li>
+        </ul>
+
+        <h2>3. विवाह का उद्देश्य</h2>
+        <ul>
+            <li><strong>परमेश्वर की महिमा करना:</strong> विवाह मसीह और कलीसिया के बीच के प्रेम को दुनिया के सामने प्रदर्शित करता है।</li>
+            <li><strong>एक महान उद्देश्य को पूरा करना:</strong> "एक से दो भले हैं।" साथ मिलकर पति-पत्नी परमेश्वर के राज्य के लिए बड़ा काम कर सकते हैं।</li>
+            <li><strong>व्यक्तिगत विकास और साथ (Companionship):</strong> अकेले रहना अच्छा नहीं है। विवाह अकेलापन दूर करता है और आपको एक बेहतर इंसान बनाता है।</li>
+        </ul>
+
+        <h1>भूमिकाएं, जिम्मेदारियां और अंतर (Roles & Differences)</h1>
+        
+        <h2>1. परिवार का बाइबिल क्रम (Order)</h2>
+        <p>सुरक्षा की छतरी का क्रम है: <strong>मसीह ➔ पति ➔ पत्नी ➔ बच्चे</strong>। यदि पति मसीह के अधिकार से बाहर जाता है, तो पूरा परिवार खतरे में आ जाता है।</p>
+
+        <h2>2. मुखियापन, अधीनता और सह-प्रबंधन</h2>
+        <ul>
+            <li><strong>मुखियापन (Headship - पति):</strong> इसका मतलब तानाशाही नहीं है, बल्कि मसीह की तरह बलिदान देने वाला नेतृत्व है।</li>
+            <li><strong>अधीनता (Submission - पत्नी):</strong> यह पति के नेतृत्व का प्यार और सम्मान के साथ आदर करना है। यह कोई गुलामी नहीं है।</li>
+            <li><strong>सह-प्रबंधन (Co-Stewardship):</strong> पुरुष और महिला दोनों 100% समान हैं। वे घर के सह-प्रबंधक (Co-managers) हैं।</li>
+        </ul>
+        <div class="example-box">
+            <strong>वास्तविक उदाहरण:</strong> "पतियों को सिर की मालिश (सम्मान और आदर) की आवश्यकता होती है, और पत्नियों को दिल की मालिश (प्यार, उनकी बातें सुनना, भावनात्मक जुड़ाव) की आवश्यकता होती है।"
+        </div>
+
+        <h2>3. पुरुषों और महिलाओं में अंतर</h2>
+        <table>
+            <tr><th>गुण / आवश्यकता</th><th>पुरुष (पति)</th><th>महिला (पत्नी)</th></tr>
+            <tr><td><strong>आकर्षण (Attraction)</strong></td><td>दृश्यात्मक (जो वे देखते हैं)</td><td>भावनात्मक सुरक्षा (उनकी देखभाल कैसे होती है)</td></tr>
+            <tr><td><strong>सबसे गहरी जरूरत</strong></td><td>सम्मान (Respect)</td><td>प्रेम (Love और भावनात्मक जुड़ाव)</td></tr>
+            <tr><td><strong>तनाव प्रतिक्रिया</strong></td><td>अकेले रहकर समस्या को सुलझाना चाहते हैं</td><td>बातचीत करके भावनाओं को व्यक्त करना चाहती हैं</td></tr>
+            <tr><td><strong>संचार (Communication)</strong></td><td>कम शब्द; तथ्यों और समाधान पर ध्यान</td><td>विवरण-उन्मुख (Detailed); बातचीत से जुड़ती हैं</td></tr>
+        </table>
+        
+        <h2>4. विवाह का डिज़ाइन: मूल बनाम नकली डिज़ाइन</h2>
+        <div class="example-box">
+            <strong>🚘 ड्राइविंग लाइसेंस का उदाहरण:</strong><br>
+            विवाह से पहले की तैयारी और काउंसलिंग बिल्कुल एक ड्राइविंग लाइसेंस प्राप्त करने जैसी है। यदि आप सड़क के नियमों को समझे बिना वाहन चलाने का प्रयास करते हैं, तो दुर्घटना होना निश्चित है। इसी तरह, एक पति और पत्नी को विवाह के मूल डिज़ाइन के भीतर ही रहना चाहिए; वे अपने वैवाहिक जीवन की शर्तों को अपनी मर्जी से खुद डिज़ाइन नहीं कर सकते, अन्यथा उसमें असफलता तय है।
+        </div>
+        
+        <h3 style="color: var(--success);">✅ मूल बाइबिल डिज़ाइन (Within Design)</h3>
+        <p><strong>मुख्य परिभाषा:</strong> एक जैविक पुरुष का एक जैविक महिला से विवाह करना, और बाइबिल में दिए गए स्पष्ट नियमों और डिज़ाइन के अनुसार अपना जीवन बिताना।</p>
+        <p><em>💡 ध्यान दें: केवल इस मूल डिज़ाइन के अनुसार जीने से ही एक जोड़े को विवाह में सच्ची शांति, सद्भाव, खुशी और वास्तविक आनंद का अनुभव हो सकता है।</em></p>
+        
+        <h3 style="color: var(--error);">❌ नकली या अमान्य डिज़ाइन (Out of Design)</h3>
+        <p style="color: var(--error);"><strong>चेतावनी:</strong> यह एक अत्यंत महत्वपूर्ण नियम है—यदि आप परमेश्वर के डिज़ाइन की सीमा से एक इंच भी बाहर कदम रखते हैं, तो आप अपने खुद के बनाए डिज़ाइन पर काम कर रहे हैं। यह स्थिति उसे स्वतः ही एक नकली डिज़ाइन बना देती है, न कि परमेश्वर का डिज़ाइन।</p>
+        <p><strong>नकली डिज़ाइन के उदाहरण:</strong></p>
+        <ul>
+            <li><strong>लिव-इन रिलेशनशिप:</strong> बिना किसी पवित्र, कानूनी और सार्वजनिक विवाह वाचा (Covenant) के एक साथ पति-पत्नी की तरह रहना।</li>
+            <li><strong>विवाह से पहले बच्चे:</strong> विवाह के पवित्र बंधन से पहले बच्चे पैदा करना, जो परिवार निर्माण के लिए स्थापित आध्यात्मिक सुरक्षात्मक क्रम को तोड़ता है।</li>
+            <li><strong>कई अफेयर (अवैध संबंध):</strong> एक से अधिक भावनात्मक या शारीरिक संबंध रखना, जो एकनिष्ठता (Monogamy) के पूर्ण नियम को खंडित करता है।</li>
+            <li><strong>बहुविवाह (Polygamy):</strong> एक से अधिक जीवनसाथी (अधिक पत्नियां) रखना, जो बाइबिल के 'एक तन' होने के मूल आधार को पूरी तरह से विकृत करता है।</li>
+            <li><strong>समलैंगिक संबंध:</strong> जैविक पुरुष-महिला के जोड़े से बाहर के समलैंगिक रिश्ते (जैसे लेस्बियन संबंध, या समान लिंग के बीच बॉयफ्रेंड-गर्लफ्रेंड संबंध)।</li>
+        </ul>
+
+        <h1>सही जीवनसाथी ढूँढना</h1>
+        
+        <h2>1. सही मानसिकता</h2>
+        <p>सही व्यक्ति ढूँढने से पहले खुद "सही व्यक्ति" बनें (रोमियों 12:2)। अपनी कमियों को दूर करें।</p>
+
+        <h2>2. समझौता न करने योग्य बातें (Non-Negotiables)</h2>
+        <ul>
+            <li><strong>विश्वासी होना चाहिए (Must be a Believer):</strong> अविश्वासियों के साथ असमान जूए में न जुतें (2 कुरिन्थियों 6:14)।</li>
+            <li><strong>दहेज नहीं (No Dowry):</strong> दहेज प्रथा लालच पर आधारित है। बाइबिल का विवाह देने पर आधारित है, माँगने पर नहीं।</li>
+            <li><strong>अलग रहना (Separate Living):</strong> माता-पिता को छोड़कर अपनी पत्नी से जुड़ना (उत्पत्ति 2:24)। ससुराल के अत्यधिक हस्तक्षेप से बचने के लिए स्वतंत्र घर बसाना।</li>
+        </ul>
+
+        <h2>3. समझौता करने योग्य बातें (Negotiables)</h2>
+        <p>आप शिक्षा, भाषा, संस्कृति, कलीसिया का डिनोमिनेशन, ऊंचाई और रंग-रूप पर समझौता कर सकते हैं।</p>
+
+        <h1>आकलन और तैयारी (Preparation)</h1>
+        <p>4-स्तरीय अनुकूलता (4-Tier Compatibility) जांचें: आध्यात्मिक, बौद्धिक, भावनात्मक, और शारीरिक।</p>
+        <p><strong>पूरी तैयारी करें:</strong> केवल शादी के दिन की नहीं, बल्कि विवाह की तैयारी करें। वित्तीय बजट बनाएं, पिछला कर्ज बताएं। अश्लीलता (Pornography) या अत्यधिक क्रोध जैसी बुरी आदतों को विवाह से <em>पहले</em> काउंसलिंग के जरिए खत्म करें। विवाह कोई जादू नहीं है जो बुरी आदतों को ठीक कर देगा।</p>
+
+        <h1>संदर्भ (References)</h1>
+        <ul>
+            <li>किताबें: <em>The 5 Love Languages</em> (गैरी चैपमैन), <em>Love & Respect</em> (इमर्सन एगरिच)</li>
+            <li>वेबसाइट/ऐप्स: Focus on the Family, YouVersion Bible App</li>
+        </ul>
+
+        <h1>अक्सर पूछे जाने वाले प्रश्न (20 FAQs)</h1>
+        <div class="faq-box"><strong>1. कोर्टशिप (बातचीत का समय) कितना लंबा होना चाहिए?</strong> 6 से 18 महीने। इतना लंबा कि आप उनके हर स्वभाव को देख सकें, लेकिन इतना भी लंबा नहीं कि शारीरिक प्रलोभन बढ़ जाए।</div>
+        <div class="faq-box"><strong>2. अगर माता-पिता दहेज की मांग करें तो क्या करें?</strong> बाइबिल के सिद्धांतों पर दृढ़ रहें। प्रेम से समझाएं कि विवाह एक पवित्र वाचा है, व्यापार नहीं।</div>
+        <div class="faq-box"><strong>3. क्या मैं किसी गैर-मसीही से शादी करके उसे बदल सकता हूँ?</strong> नहीं। यह बाइबिल (2 कुरिं 6:14) के विरुद्ध है।</div>
+        <div class="faq-box"><strong>4. क्या पिछले पापों/संबंधों को बताना चाहिए?</strong> हाँ। सगाई से पहले बड़े पापों को स्वीकार करें ताकि विवाह पूर्ण सत्य की नींव पर बने।</div>
+        <div class="faq-box"><strong>5. माता-पिता के साथ रहने के बारे में क्या?</strong> बाइबिल "छोड़ने और जुड़ने" (Leave and Cleave) को कहती है। स्वतंत्र घर बसाना विवाह के स्वास्थ्य के लिए सर्वोत्तम है।</div>
+        <div class="faq-box"><strong>6. क्या उम्र का बड़ा अंतर मायने रखता है?</strong> बाइबिल में कोई नियम नहीं है। यह आप पर निर्भर है, लेकिन ऊर्जा और सोच के अंतर पर विचार करें।</div>
+        <div class="faq-box"><strong>7. मैं परमेश्वर की इच्छा कैसे जानूँ?</strong> परमेश्वर का वचन, प्रार्थना, और मसीही सलाहकारों के माध्यम से। परमेश्वर कभी भी वचन के खिलाफ जाने को नहीं कहेंगे।</div>
+        <div class="faq-box"><strong>8. अगर कोर्टशिप के दौरान बहुत झगड़े हों?</strong> यह एक खतरे की घंटी (Red Flag) है। अगर अभी शांति से बात नहीं सुलझ रही, तो शादी के बाद और भी बुरा होगा।</div>
+        <div class="faq-box"><strong>9. क्या मुझे अपना कर्ज (Debt) बताना चाहिए?</strong> बिल्कुल। कर्ज छिपाना धोखा है। विवाह में वित्तीय पारदर्शिता होनी चाहिए।</div>
+        <div class="faq-box"><strong>10. शादी से पहले पोर्नोग्राफी की लत कैसे छोड़ें?</strong> एक जवाबदेह साथी (Accountability partner) बनाएं, पास्टर से काउंसलिंग लें। इसे छिपाकर शादी न करें।</div>
+        <div class="faq-box"><strong>11. क्या लॉन्ग डिस्टेंस कोर्टशिप सही है?</strong> हो सकती है, लेकिन आपको नियमित वीडियो कॉल करनी चाहिए और असल जिंदगी में मिलने का समय निकालना चाहिए।</div>
+        <div class="faq-box"><strong>12. ससुराल वालों के साथ सीमाएं (Boundaries) कैसे तय करें?</strong> पति को नम्रता से लेकिन दृढ़ता से सीमाएं तय करनी चाहिए और पत्नी को प्राथमिकता देनी चाहिए।</div>
+        <div class="faq-box"><strong>13. क्या हम अलग-अलग चर्च बैकग्राउंड (Denominations) से शादी कर सकते हैं?</strong> हाँ, यदि आप उद्धार और बाइबिल जैसे मुख्य सिद्धांतों पर सहमत हैं, और तय कर लें कि शादी के बाद किस चर्च में जाएंगे।</div>
+        <div class="faq-box"><strong>14. अगर शुरुआत में शारीरिक आकर्षण न हो तो?</strong> चरित्र सबसे महत्वपूर्ण है, लेकिन शारीरिक आकर्षण भी विवाह का एक हिस्सा है। अगर बिल्कुल भी आकर्षण नहीं है, तो जबरदस्ती न करें।</div>
+        <div class="faq-box"><strong>15. तलाक के डर से कैसे निपटें?</strong> मसीह की चट्टान पर विवाह बनाएं। शादी से पहले की काउंसलिंग लें, यह तलाक की संभावना को बहुत कम कर देती है।</div>
+        <div class="faq-box"><strong>16. क्या मानसिक स्वास्थ्य (Mental Health) की समस्याएं बतानी चाहिए?</strong> हाँ। डिप्रेशन या एंग्जायटी जैसी बातें पार्टनर को बतानी चाहिए ताकि वे आपको समझ सकें और सपोर्ट कर सकें।</div>
+        <div class="faq-box"><strong>17. क्या शादी से पहले काउंसलिंग (Pre-marital counseling) अनिवार्य है?</strong> यह कानूनी रूप से नहीं, लेकिन बाइबिल के अनुसार बहुत आवश्यक और बुद्धिमानी का काम है।</div>
+        <div class="faq-box"><strong>18. क्या पत्नी एक बड़ा करियर बना सकती है?</strong> हाँ। नीतिवचन 31 एक बहुत ही मेहनती और कामकाजी महिला का वर्णन करता है। बस करियर परिवार से ऊपर नहीं होना चाहिए।</div>
+        <div class="faq-box"><strong>19. क्या "अधीनता" का अर्थ है कि पत्नी की कोई आवाज़ नहीं है?</strong> बिल्कुल नहीं। पत्नी एक सलाहकार और सह-प्रबंधक है। मुखियापन का अर्थ पति की अंतिम जिम्मेदारी है, न कि तानाशाही।</div>
+        <div class="faq-box"><strong>20. क्या शादी से पहले बच्चों के बारे में चर्चा करनी चाहिए?</strong> हाँ! आपको चर्चा करनी चाहिए कि बच्चे कब और कितने चाहिए, और उनका पालन-पोषण कैसे होगा।</div>
+    `,
+    hin: `
+        <h1>Marriage ka Biblical Basis aur Design</h1>
+        
+        <h2>1. Marriage kya hai?</h2>
+        <p>Biblical perspective ke according, marriage ke 4 key characteristics hain:</p>
+        <ul>
+            <li><strong>Sacred Relationship:</strong> Yeh God dwara banaya gaya ek holy bond hai, sirf koi civil contract nahi.</li>
+            <li><strong>Open Among Witnesses:</strong> God, family, aur society ke saamne kiya gaya public commitment. Secret shadiyan galat hain.</li>
+            <li><strong>Permanent:</strong> Life-long covenant (Mark 10:9 - Jise God ne joda hai, insaan use alag na kare).</li>
+            <li><strong>Sexual Union:</strong> Marriage bed ko pure rakhna. God adultery ko judge karenge (Hebrews 13:4).</li>
+        </ul>
+        <div class="example-box">
+            <strong>🚘 Driving License Analogy:</strong><br>
+            Bina rules seekhe agar aap car drive karoge toh crash hona pakka hai. Same waise hi, Pre-marital counseling marriage ka driving license hai. Bina prep ke shadi karoge toh marriage "crash" ho sakti hai.
+        </div>
+
+        <h2>2. Creator's Authority (Car Analogy)</h2>
+        <p>Jaise car maker ke manual ke hisaab se chalti hai (petrol car me paani nahi daalte), waise hi marriage God ke manual (Bible) se chalti hai.</p>
+        <ul>
+            <li><strong>Original Design:</strong> Bible ke rules follow karna. Result: Peace, joy, harmony.</li>
+            <li><strong>Fake Design:</strong> God ke design se bahar jana (Live-in, before-marriage kids, affairs, polygamy). Isse God ki "warranty" void ho jati hai aur life me destruction aata hai.</li>
+        </ul>
+
+        <h2>3. Purpose of Marriage</h2>
+        <ul>
+            <li><strong>God ko glorify karna:</strong> Christ aur Church ke love ko duniya ko dikhana.</li>
+            <li><strong>Greater Purpose:</strong> Ek se bhale do. Milkar God ke kingdom ke liye kaam karna.</li>
+            <li><strong>Companionship:</strong> Akele rehna achha nahi hai. Ek dusre ka support banna aur loneliness dur karna.</li>
+        </ul>
+
+        <h1>Roles, Responsibilities aur Differences</h1>
+        
+        <h2>1. Family ka Biblical Order</h2>
+        <p>Protection ki umbrella is tarah flow karti hai: <strong>Christ ➔ Husband ➔ Wife ➔ Children</strong>.</p>
+
+        <h2>2. Headship, Submission aur Co-Stewardship</h2>
+        <ul>
+            <li><strong>Headship (Husband):</strong> Iska matlab dictator banna nahi hai, balki Christ ki tarah sacrificial leadership dena hai.</li>
+            <li><strong>Submission (Wife):</strong> Husband ki leadership ki respect karna aur love se submit karna. Yeh inferiority nahi hai.</li>
+            <li><strong>Co-Stewardship:</strong> Men aur Women 100% equal hain. Dono ghar ke co-managers hain.</li>
+        </ul>
+        <div class="example-box">
+            <strong>Real World Example:</strong> "Husbands ko head massage (respect) chahiye, aur wives ko heart massage (love aur emotional care) chahiye." — Dr. Tony Evans
+        </div>
+
+        <h2>3. Men vs Women Differences</h2>
+        <table>
+            <tr><th>Need</th><th>Men (Husbands)</th><th>Women (Wives)</th></tr>
+            <tr><td><strong>Attraction</strong></td><td>Visual (Jo dekhte hain)</td><td>Security & Care</td></tr>
+            <tr><td><strong>Core Need</strong></td><td>Respect</td><td>Love & Emotional Connection</td></tr>
+            <tr><td><strong>Stress me</strong></td><td>Akele rehkar problem fix karna chahte hain</td><td>Baat karke emotions process karna chahti hain</td></tr>
+            <tr><td><strong>Communication</strong></td><td>Kam words, logical facts</td><td>Details pasand hain, multitasker hoti hain</td></tr>
+        </table>
+        
+        <h2>4. Design of Marriage: Original vs Fake Designs</h2>
+        <div class="example-box">
+            <strong>🚘 Driving License Analogy:</strong><br>
+            Pre-marital preparation aur counseling bilkul ek driving license lene jaisa hai. Agar aap road rules samjhe bina drive karenge, toh crash hona pakka hai. Same waise hi, husband aur wife ko marriage ke original design ke andar hi rehna chahiye; wo apni marzi se marriage ki conditions khud design nahi kar sakte, warna failure pakka hai.
+        </div>
+        
+        <h3 style="color: var(--success);">✅ The Original Design (Within Design)</h3>
+        <p><strong>Core Definition:</strong> Ek biological man ka ek biological woman se shadi karna, aur Bible me diye gaye clear rules aur design ke according apni life jeena.</p>
+        <p><em>💡 NOTE: Sirf is original design ke according jeene se hi ek couple marriage me true peace, harmony, joy aur real pleasure experience kar sakta hai.</em></p>
+        
+        <h3 style="color: var(--error);">❌ Fake Designs (Out of Design)</h3>
+        <p style="color: var(--error);"><strong>Warning:</strong> Yeh ek bahut important rule hai—agar aap God ke design ki boundary se ek inch bhi bahar step karte hain, toh aap apne khud ke banaye design par kaam kar rahe hain. Yeh automatically ise ek fake design bana deta hai, na ki God ka design.</p>
+        <p><strong>Out-of-Design ke examples:</strong></p>
+        <ul>
+            <li><strong>Live-in Relationships:</strong> Bina kisi holy, legal aur public marriage covenant ke ek sath husband-wife ki tarah rehna.</li>
+            <li><strong>Children Before Marriage:</strong> Shadi se pehle bacche paida karna, jo family building ke spiritual order ko todta hai.</li>
+            <li><strong>Many Affairs:</strong> Ek se zyada emotional ya physical relationships rakhna, jo monogamy (ek-nishthata) ke absolute rule ko todta hai.</li>
+            <li><strong>Polygamy:</strong> Ek se zyada life partner (zyada biwiyan) rakhna, jo Bible ke 'one flesh' base ko puri tarah destroy karta hai.</li>
+            <li><strong>Same-Sex Relationships:</strong> Biological male-female pair ke bahar ke romantic/marital relations (jaise Lesbian relations, ya same gender me BF-GF relations).</li>
+        </ul>
+
+        <h1>Right Life Partner Find Karna</h1>
+        
+        <h2>1. Right Mindset</h2>
+        <p>Right partner dhoondne se pehle khud "Right Person" bano (Romans 12:2). Apni buri aadaton ko theek karo.</p>
+
+        <h2>2. Non-Negotiables (No Compromise)</h2>
+        <ul>
+            <li><strong>Believer hona chahiye:</strong> Unbelievers ke sath unequal yoke me mat judo (2 Cor 6:14).</li>
+            <li><strong>No Dowry (Dahej nahi):</strong> Marriage lene-dene ka business nahi, covenant hai. Dowry system greed par based hai.</li>
+            <li><strong>Separate Living (Leave and Cleave):</strong> In-laws ke toxic interference se bachne ke liye shadi ke baad apna alag independent ghar basana zaroori hai (Genesis 2:24).</li>
+        </ul>
+
+        <h2>3. Negotiables (Flexible)</h2>
+        <p>Education, Language, Culture, Church denomination, Height, aur Looks par aap compromise kar sakte hain.</p>
+
+        <h1>Assessment aur Preparation</h1>
+        <p><strong>4-Tier Compatibility:</strong> Spiritual, Intellectual, Emotional, aur Physical level par match check karein.</p>
+        <p><strong>Full Preparation:</strong> Financial budget banayein. Agar Pornography, gussa (anger), ya aalas ki buri aadat hai toh marriage se PEHLE counseling lekar theek karein. Shadi koi magic nahi hai jo buri aadaton ko theek kar degi.</p>
+
+        <h1>References</h1>
+        <ul>
+            <li>Books: <em>The 5 Love Languages</em>, <em>Love & Respect</em></li>
+            <li>Apps: YouVersion Bible, Focus on the Family website.</li>
+        </ul>
+
+        <h1>Frequently Asked Questions (20 FAQs)</h1>
+        <div class="faq-box"><strong>1. Courtship period kitna lamba hona chahiye?</strong> 6 se 18 months. Itna lamba ki aap unka har mood dekh sakein, par itna lamba nahi ki physical temptation badh jaye.</div>
+        <div class="faq-box"><strong>2. Agar parents dowry (dahej) demand karein toh?</strong> Biblical principles par stand lein. Pyaar se samjhayein ki marriage business nahi, covenant hai.</div>
+        <div class="faq-box"><strong>3. Kya main non-believer se shadi karke use convert kar sakta hu?</strong> Nahi. Yeh "missionary dating" hai aur Bible (2 Cor 6:14) iske completely against hai.</div>
+        <div class="faq-box"><strong>4. Kya past sexual relationships confess karne chahiye?</strong> Haan. Engagement se pehle major sins confess karein taaki marriage truth ki foundation par bane, but unnecessary graphic details mat dein.</div>
+        <div class="faq-box"><strong>5. Parents ke sath joint family me rehne ke baare me kya khayal hai?</strong> Bible "Leave and Cleave" kehti hai. Apna separate aur independent ghar basana marriage ke liye best hai.</div>
+        <div class="faq-box"><strong>6. Kya age gap matter karta hai?</strong> Bible me age ka koi rule nahi hai. Yeh negotiable hai, bas dono ki maturity aur life stages match karni chahiye.</div>
+        <div class="faq-box"><strong>7. God ki will (ichha) kaise pata karein?</strong> Bible, prayer, aur wise Christian counselors ke through. God kabhi bhi Bible ke opposite kuch karne ko nahi kahenge.</div>
+        <div class="faq-box"><strong>8. Agar courtship me bahut arguments ho rahe hain?</strong> Yeh ek bada red flag hai. Agar abhi conflicts solve nahi ho rahe, toh shadi ke baad matter aur worse hoga.</div>
+        <div class="faq-box"><strong>9. Kya apna financial debt (karza) batana zaroori hai?</strong> 100%. Debt chupana fraud hai. Marriage me financial transparency honi chahiye.</div>
+        <div class="faq-box"><strong>10. Shadi se pehle porn addiction kaise chodein?</strong> Accountability partner banayein, pastor se counseling lein. Is addiction ko chupakar shadi mat karein.</div>
+        <div class="faq-box"><strong>11. Kya long-distance courtship theek hai?</strong> Ho sakti hai, but video calls karein aur in-person milne ka time zarur nikaalein.</div>
+        <div class="faq-box"><strong>12. In-laws ke sath boundaries kaise set karein?</strong> Husband ko politely par firmly boundaries set karni chahiye taaki wife hamesha priority feel kare.</div>
+        <div class="faq-box"><strong>13. Kya hum alag church denominations me shadi kar sakte hain?</strong> Haan, agar salvation aur Bible ke core beliefs same hain. Shadi ke baad kis church jayenge, yeh pehle hi decide kar lein.</div>
+        <div class="faq-box"><strong>14. Agar physical attraction bilkul na ho toh?</strong> Character sabse important hai, but attraction bhi compatibility ka tier hai. Agar zero attraction hai, toh zabardasti shadi mat karein.</div>
+        <div class="faq-box"><strong>15. Divorce ke darr se kaise deal karein?</strong> Apni marriage Christ ki foundation par banayein. Pre-marital counseling is darr ko bohot kam kar deti hai.</div>
+        <div class="faq-box"><strong>16. Kya mental health issues disclose karne chahiye?</strong> Haan. Depression ya anxiety jaise issues pehle batane chahiye taaki partner aapko support karna seekh sake.</div>
+        <div class="faq-box"><strong>17. Kya pre-marital counseling mandatory hai?</strong> Legally nahi, par Biblically yeh bahut zaroori (mandatory) aur wise step hai.</div>
+        <div class="faq-box"><strong>18. Kya wife ek demanding career pursue kar sakti hai?</strong> Haan. Proverbs 31 ki aurat bahut hard-working thi. Bas career family se upar nahi hona chahiye.</div>
+        <div class="faq-box"><strong>19. Kya "submission" ka matlab wife ki koi aawaz nahi hai?</strong> Bilkul nahi. Wife ghar ki co-manager hai. Headship ka matlab husband ki ultimate responsibility hai, dictatorship nahi.</div>
+        <div class="faq-box"><strong>20. Kya shadi se pehle bacchon ke baare me baat karni chahiye?</strong> Yes! Bacche chahiye ya nahi, kab aur kitne, aur unki parenting kaise hogi, yeh pehle clear hona chahiye.</div>
+    `
+};
+
+/* ================= DASHBOARD TRANSLATIONS ================= */
+const uiTranslations = {
+    en: {
+        welcome: "Welcome, ",
+        dashSub: "Track your preparation and understanding of God's design for marriage.",
+        c1Title: "📖 Study Guide",
+        c1Desc: "Read the comprehensive Biblical basis of marriage, roles, and preparation.",
+        btnRead: "Start Reading",
+        c2Title: "🎯 Knowledge Test",
+        c2Desc: "Test your understanding with our interactive 30-question assessment.",
+        btnTest: "Take the Test",
+        c3Title: "📊 Your Progress",
+        c3Desc: "Latest Test Score:",
+        btnBack: "← Back to Dashboard",
+        btnFinish: "Finish Reading & Return",
+        btnExit: "← Exit Quiz",
+        resTitle: "Test Complete!",
+        resDesc: "You have successfully completed the marriage assessment.",
+        btnRetDash: "Return to Dashboard",
+        btnLogout: "Logout"
+    },
+    hi: {
+        welcome: "स्वागत है, ",
+        dashSub: "विवाह के लिए अपनी तैयारी और ज्ञान को ट्रैक करें।",
+        c1Title: "📖 अध्ययन सामग्री",
+        c1Desc: "विवाह का बाइबिल आधार, भूमिकाएँ और तैयारी विस्तार से पढ़ें।",
+        btnRead: "पढ़ना शुरू करें",
+        c2Title: "🎯 ज्ञान परीक्षण",
+        c2Desc: "30 प्रश्नों वाले टेस्ट के साथ अपनी समझ का परीक्षण करें।",
+        btnTest: "टेस्ट शुरू करें",
+        c3Title: "📊 आपकी प्रगति",
+        c3Desc: "नवीनतम टेस्ट स्कोर:",
+        btnBack: "← डैशबोर्ड पर लौटें",
+        btnFinish: "पढ़ना समाप्त करें",
+        btnExit: "← टेस्ट छोड़ें",
+        resTitle: "टेस्ट पूरा हुआ!",
+        resDesc: "आपने सफलतापूर्वक विवाह मूल्यांकन पूरा कर लिया है।",
+        btnRetDash: "डैशबोर्ड पर लौटें",
+        btnLogout: "लॉग आउट"
+    },
+    hin: {
+        welcome: "Welcome, ",
+        dashSub: "Apni marriage preparation aur knowledge ko track karein.",
+        c1Title: "📖 Study Guide",
+        c1Desc: "Marriage ka Biblical basis, roles, aur preparation detail me padhein.",
+        btnRead: "Padhna Shuru Karein",
+        c2Title: "🎯 Knowledge Test",
+        c2Desc: "30 questions ke test ke sath apni knowledge check karein.",
+        btnTest: "Test Shuru Karein",
+        c3Title: "📊 Aapki Progress",
+        c3Desc: "Latest Test Score:",
+        btnBack: "← Dashboard par wapas jayein",
+        btnFinish: "Padhna Finish Karein",
+        btnExit: "← Quiz Exit Karein",
+        resTitle: "Test Complete!",
+        resDesc: "Aapne marriage assessment successfully complete kar liya hai.",
+        btnRetDash: "Dashboard par wapas jayein",
+        btnLogout: "Logout"
+    }
+}
+
+/* ================= 30 MULTILINGUAL QUIZ QUESTIONS ================= */
+// We store 30 robust questions. Text adapts based on language.
+const quizData = [
+    {
+        en: { q: "According to the Driving License analogy, why is pre-marital preparation necessary?", opts: ["To get a government certificate", "To prevent a 'crash' in your marriage", "To impress your in-laws", "To save money on the wedding"], ans: 1 },
+        hi: { q: "ड्राइविंग लाइसेंस के उदाहरण के अनुसार, विवाह पूर्व तैयारी क्यों आवश्यक है?", opts: ["सरकारी प्रमाणपत्र पाने के लिए", "अपनी शादी को 'क्रैश' होने से बचाने के लिए", "ससुराल वालों को प्रभावित करने के लिए", "शादी का खर्च बचाने के लिए"], ans: 1 },
+        hin: { q: "Driving License analogy ke according, pre-marital preparation kyu zaroori hai?", opts: ["Govt certificate ke liye", "Apni marriage ko 'crash' hone se bachane ke liye", "In-laws ko impress karne ke liye", "Paisa bachane ke liye"], ans: 1 }
+    },
+    {
+        en: { q: "Which of the following is considered a strictly 'Non-Negotiable' trait?", opts: ["Having the same level of education", "Speaking the same language", "Being a Believer in Christ", "Having the same height"], ans: 2 },
+        hi: { q: "निम्नलिखित में से किसे 'समझौता न करने योग्य' (Non-Negotiable) माना जाता है?", opts: ["समान शिक्षा स्तर", "एक ही भाषा बोलना", "मसीह में विश्वासी होना", "समान ऊंचाई"], ans: 2 },
+        hin: { q: "Inme se kya strictly 'Non-Negotiable' hai?", opts: ["Same education level", "Same language bolna", "Christ me Believer hona", "Same height hona"], ans: 2 }
+    },
+    {
+        en: { q: "What does the 'Car Maker' analogy teach us?", opts: ["Buy expensive things", "Marriage works best when following God's original manual/design", "Couples should travel often", "Husbands are drivers, wives are passengers"], ans: 1 },
+        hi: { q: "'कार निर्माता' का उदाहरण हमें क्या सिखाता है?", opts: ["महंगी चीजें खरीदें", "विवाह तब सबसे अच्छा काम करता है जब परमेश्वर के मूल डिज़ाइन का पालन किया जाए", "जोड़ों को यात्रा करनी चाहिए", "पति ड्राइवर हैं और पत्नियां यात्री"], ans: 1 },
+        hin: { q: "'Car Maker' analogy kya sikhati hai?", opts: ["Mehngi cheezein khareedein", "Marriage tab best chalti hai jab God ke original manual/design ko follow karein", "Travel karna chahiye", "Husbands drivers hain aur wives passengers"], ans: 1 }
+    },
+    {
+        en: { q: "In the biblical order of authority, who falls directly under the headship of Christ?", opts: ["The Children", "The Church Pastor", "The Husband", "The Wife"], ans: 2 },
+        hi: { q: "बाइबिल के अधिकार क्रम में, मसीह के ठीक नीचे कौन आता है?", opts: ["बच्चे", "पास्टर", "पति", "पत्नी"], ans: 2 },
+        hin: { q: "Biblical order of authority me, Christ ke theek neeche kaun aata hai?", opts: ["Bacche", "Pastor", "Husband", "Wife"], ans: 2 }
+    },
+    {
+        en: { q: "According to Dr. Tony Evans, what is the core emotional need of a husband?", opts: ["Love and Romance", "Respect and Acknowledgment", "Lots of talking", "Physical space"], ans: 1 },
+        hi: { q: "डॉ टोनी इवांस के अनुसार, पति की मुख्य भावनात्मक आवश्यकता क्या है?", opts: ["प्यार और रोमांस", "सम्मान और आदर", "बहुत सारी बातें", "अकेले रहने की जगह"], ans: 1 },
+        hin: { q: "Dr. Tony Evans ke according, husband ki core emotional need kya hai?", opts: ["Love and Romance", "Respect and Acknowledgment", "Bahut baatein karna", "Physical space"], ans: 1 }
+    },
+    {
+        en: { q: "What is the biblical stance on the Dowry system?", opts: ["It is allowed if the girl's family is rich", "It is an unbiblical practice based on greed", "It is required for a good start", "It is a negotiable preference"], ans: 1 },
+        hi: { q: "दहेज प्रथा पर बाइबिल का क्या दृष्टिकोण है?", opts: ["लड़की का परिवार अमीर हो तो अनुमति है", "यह लालच पर आधारित है और बाइबिल के विरुद्ध है", "अच्छी शुरुआत के लिए यह आवश्यक है", "यह समझौता करने योग्य है"], ans: 1 },
+        hin: { q: "Dowry (dahej) system par biblical stance kya hai?", opts: ["Rich family ho toh allowed hai", "Yeh greed par based hai aur unbiblical hai", "Good start ke liye zaroori hai", "Yeh negotiable preference hai"], ans: 1 }
+    },
+    {
+        en: { q: "What does Genesis 2:24 ('Leave and Cleave') imply regarding housing after marriage?", opts: ["Living in a joint family forever", "Establishing a separate, independent household", "Moving to a different country", "Living separately from the spouse"], ans: 1 },
+        hi: { q: "उत्पत्ति 2:24 ('छोड़ना और जुड़ना') विवाह के बाद रहने के बारे में क्या संकेत देता है?", opts: ["हमेशा संयुक्त परिवार में रहना", "एक अलग, स्वतंत्र घर स्थापित करना", "दूसरे देश चले जाना", "पति/पत्नी से अलग रहना"], ans: 1 },
+        hin: { q: "Genesis 2:24 ('Leave and Cleave') shadi ke baad rehne ke baare me kya sikhata hai?", opts: ["Hamesha joint family me rehna", "Ek separate aur independent ghar basana", "Dusre desh jana", "Spouse se alag rehna"], ans: 1 }
+    },
+    {
+        en: { q: "How should bad habits like pornography or uncontrollable anger be handled before marriage?", opts: ["Hide them until the wedding", "Expect marriage to magically cure them", "Resolve them through counseling and accountability BEFORE marriage", "It's normal, ignore it"], ans: 2 },
+        hi: { q: "विवाह से पहले अश्लीलता या क्रोध जैसी बुरी आदतों से कैसे निपटना चाहिए?", opts: ["शादी तक उन्हें छुपाएं", "शादी से जादू की तरह ठीक होने की उम्मीद करें", "शादी से पहले काउंसलिंग और जवाबदेही के माध्यम से उन्हें सुलझाएं", "यह सामान्य है, नजरअंदाज करें"], ans: 2 },
+        hin: { q: "Pornography ya gusse jaisi buri aadaton ko shadi se pehle kaise handle karein?", opts: ["Shadi tak chupayein", "Expect karein ki shadi sab magically theek kar degi", "Shadi se PEHLE counseling se unhe resolve karein", "Yeh normal hai, ignore karein"], ans: 2 }
+    },
+    {
+        en: { q: "What is a 'Fake Design' (Out of Design) in the context of marriage?", opts: ["An arranged marriage", "Living-in together without a marital covenant", "Having a small wedding", "Marrying from a different state"], ans: 1 },
+        hi: { q: "विवाह के संदर्भ में 'नकली डिज़ाइन' (Out of Design) क्या है?", opts: ["अरेंज मैरिज", "बिना विवाह वाचा के एक साथ रहना (लिव-इन)", "छोटी शादी करना", "दूसरे राज्य में शादी करना"], ans: 1 },
+        hin: { q: "Marriage ke context me 'Fake Design' (Out of Design) kya hai?", opts: ["Arranged marriage", "Bina marriage covenant ke ek sath rehna (Live-in)", "Chhoti shadi", "Dusre state me shadi karna"], ans: 1 }
+    },
+    {
+        en: { q: "What is the deepest need of a wife according to Ephesians 5?", opts: ["To be loved sacrificially and cherished", "To control the household finances", "To have absolute independence", "To receive expensive gifts"], ans: 0 },
+        hi: { q: "इफिसियों 5 के अनुसार, पत्नी की सबसे गहरी आवश्यकता क्या है?", opts: ["बलिदान के साथ प्यार किया जाना और संजोया जाना", "घर के वित्त को नियंत्रित करना", "पूर्ण स्वतंत्रता", "महंगे उपहार प्राप्त करना"], ans: 0 },
+        hin: { q: "Ephesians 5 ke according, wife ki deepest need kya hai?", opts: ["Sacrificial love aur cherish ki jana", "Ghar ke finance control karna", "Absolute independence", "Expensive gifts"], ans: 0 }
+    },
+    // Adding 20 more standardized questions to reach 30
+    { en:{q:"Marriage is an institution established by:",opts:["God","The Government","Society","Human Tradition"],ans:0}, hi:{q:"विवाह किसके द्वारा स्थापित संस्था है?",opts:["परमेश्वर","सरकार","समाज","मानवीय परंपरा"],ans:0}, hin:{q:"Marriage kiske dwara establish ki gayi institution hai?",opts:["God","Government","Society","Human Tradition"],ans:0} },
+    { en:{q:"Can you marry a non-believer with the hope of converting them?",opts:["Yes, it is encouraged","No, this is 'missionary dating' and violates scripture","Only if they are rich","Yes, if parents agree"],ans:1}, hi:{q:"क्या आप धर्म परिवर्तन की आशा से किसी गैर-विश्वासी से शादी कर सकते हैं?",opts:["हाँ, यह प्रोत्साहित है","नहीं, यह धर्मग्रंथ के विरुद्ध है","केवल तभी जब वे अमीर हों","हाँ, अगर माता-पिता सहमत हों"],ans:1}, hin:{q:"Kya aap convert karne ke hope me non-believer se shadi kar sakte hain?",opts:["Haan","Nahi, yeh scripture ke against hai","Agar wo rich ho","Agar parents maane"],ans:1} },
+    { en:{q:"Is pre-marital counseling mandatory?",opts:["It is illegal not to have it","It is highly recommended biblically (Prov 15:22)","It is a waste of time","Only for arranged marriages"],ans:1}, hi:{q:"क्या विवाह पूर्व काउंसलिंग अनिवार्य है?",opts:["यह नहीं करना गैरकानूनी है","बाइबिल के अनुसार इसकी अत्यधिक अनुशंसा की जाती है","यह समय की बर्बादी है","केवल अरेंज मैरिज के लिए"],ans:1}, hin:{q:"Kya pre-marital counseling mandatory hai?",opts:["Illegal hai na karna","Biblically highly recommended hai","Time waste hai","Sirf arranged marriage ke liye"],ans:1} },
+    { en:{q:"Who are co-stewards/co-managers of the family?",opts:["Husband and Wife (equal value)","The Parents-in-law","The Church elders","Only the Husband"],ans:0}, hi:{q:"परिवार के सह-प्रबंधक (Co-stewards) कौन हैं?",opts:["पति और पत्नी (समान मूल्य)","सास-ससुर","चर्च के एल्डर","केवल पति"],ans:0}, hin:{q:"Family ke co-stewards/managers kaun hain?",opts:["Husband aur Wife (equal value)","In-laws","Church elders","Sirf Husband"],ans:0} },
+    { en:{q:"What should you do about past sexual sins?",opts:["Keep them a complete secret forever","Confess them before engagement to build truth","Brag about them","Tell all your friends"],ans:1}, hi:{q:"अतीत के यौन पापों के बारे में क्या करना चाहिए?",opts:["उन्हें हमेशा गुप्त रखें","सत्य की नींव बनाने के लिए सगाई से पहले स्वीकार करें","उनके बारे में डींग मारें","अपने सभी दोस्तों को बताएं"],ans:1}, hin:{q:"Past sexual sins ke baare me kya karna chahiye?",opts:["Hamesha secret rakhein","Engagement se pehle confess karein","Brag karein","Doston ko batayein"],ans:1} },
+    { en:{q:"How do men primarily handle stress?",opts:["Pulling away to solve it logically","Talking a lot about it","Crying immediately","Shopping"],ans:0}, hi:{q:"तनाव (stress) के समय पुरुष मुख्य रूप से कैसी प्रतिक्रिया देते हैं?",opts:["तार्किक रूप से हल करने के लिए अकेले रहना","इसके बारे में बहुत बात करना","तुरंत रोना","शॉपिंग"],ans:0}, hin:{q:"Men primarily stress ko kaise handle karte hain?",opts:["Akele rehkar logically solve karna","Bahut baatein karna","Rona","Shopping"],ans:0} },
+    { en:{q:"How do women primarily communicate?",opts:["Few words, just facts","Detail-oriented, multitasking, emotional bonding","Only through writing","They don't communicate"],ans:1}, hi:{q:"महिलाएं मुख्य रूप से कैसे संवाद करती हैं?",opts:["कम शब्द, केवल तथ्य","विस्तार-उन्मुख, मल्टीटास्किंग, भावनात्मक जुड़ाव","केवल लिखकर","वे संवाद नहीं करतीं"],ans:1}, hin:{q:"Women primarily kaise communicate karti hain?",opts:["Kam words, facts","Detail-oriented, emotional bonding","Sirf likhkar","Communicate nahi karti"],ans:1} },
+    { en:{q:"What should you do about financial debt before marriage?",opts:["Hide it","Disclose it fully (transparency)","Transfer it to a friend","Ignore it"],ans:1}, hi:{q:"शादी से पहले वित्तीय कर्ज के बारे में क्या करना चाहिए?",opts:["इसे छुपाएं","इसे पूरी तरह बताएं (पारदर्शिता)","इसे किसी मित्र को ट्रांसफर करें","इसे नजरअंदाज करें"],ans:1}, hin:{q:"Shadi se pehle financial debt (karze) ka kya karein?",opts:["Hide karein","Fully disclose karein (transparency)","Friend ko transfer karein","Ignore karein"],ans:1} },
+    { en:{q:"Should you discuss having children before marriage?",opts:["No, it kills romance","Yes, discuss if, when, and how to raise them","Only after 5 years","The pastor decides"],ans:1}, hi:{q:"क्या शादी से पहले बच्चों के बारे में चर्चा करनी चाहिए?",opts:["नहीं, यह रोमांस खत्म करता है","हाँ, कब और कैसे पालन-पोषण करना है, इस पर चर्चा करें","केवल 5 साल बाद","पास्टर तय करता है"],ans:1}, hin:{q:"Kya shadi se pehle bacchon ke baare me discuss karna chahiye?",opts:["Nahi, romance kill hota hai","Haan, kab aur kaise raise karna hai","5 saal baad","Pastor decide karega"],ans:1} },
+    { en:{q:"What is a red flag during courtship?",opts:["Agreeing on favorite food","Frequent harsh arguments and inability to resolve conflict","Living in different cities","Having different hobbies"],ans:1}, hi:{q:"कोर्टशिप के दौरान खतरे की घंटी (Red flag) क्या है?",opts:["पसंदीदा भोजन पर सहमत होना","लगातार कठोर बहस और संघर्ष न सुलझा पाना","अलग-अलग शहरों में रहना","अलग-अलग शौक होना"],ans:1}, hin:{q:"Courtship me red flag kya hai?",opts:["Favorite food same hona","Frequent harsh arguments aur conflict solve na kar pana","Alag cities me rehna","Alag hobbies hona"],ans:1} },
+    { en:{q:"What does 'submission' NOT mean for a biblical wife?",opts:["Respecting leadership","Being a mindless slave with no voice","Trusting God's order","Supporting her husband"],ans:1}, hi:{q:"बाइबिल की पत्नी के लिए 'अधीनता' का क्या अर्थ नहीं है?",opts:["नेतृत्व का सम्मान करना","बिना आवाज़ वाली एक मूर्ख गुलाम होना","परमेश्वर के क्रम पर भरोसा करना","अपने पति का समर्थन करना"],ans:1}, hin:{q:"Biblical wife ke liye 'submission' ka kya matlab NAHI hai?",opts:["Leadership respect karna","Bina aawaz wali slave banna","God ke order ko trust karna","Husband ko support karna"],ans:1} },
+    { en:{q:"Which of these is a Negotiable?",opts:["Believing in Christ","Dowry","Church Denomination","Leaving parents' house"],ans:2}, hi:{q:"इनमें से कौन सा समझौता करने योग्य (Negotiable) है?",opts:["मसीह में विश्वास","दहेज","चर्च डिनोमिनेशन (संप्रदाय)","माता-पिता का घर छोड़ना"],ans:2}, hin:{q:"Inme se kya Negotiable hai?",opts:["Christ me believe karna","Dowry","Church Denomination","Parents ka ghar chhodna"],ans:2} },
+    { en:{q:"Which of these is a Non-Negotiable?",opts:["Language spoken","Being a believer","Height","Education level"],ans:1}, hi:{q:"इनमें से कौन समझौता न करने योग्य (Non-Negotiable) है?",opts:["बोली जाने वाली भाषा","विश्वासी होना","ऊंचाई","शिक्षा स्तर"],ans:1}, hin:{q:"Inme se kya Non-Negotiable hai?",opts:["Language","Believer hona","Height","Education level"],ans:1} },
+    { en:{q:"Mental health issues (like depression) should be:",opts:["Hidden forever","Disclosed before marriage to allow support","Ignored","Prayed away without telling"],ans:1}, hi:{q:"मानसिक स्वास्थ्य समस्याओं (जैसे डिप्रेशन) को:",opts:["हमेशा के लिए छिपाना चाहिए","समर्थन की अनुमति देने के लिए शादी से पहले बताना चाहिए","नजरअंदाज करना चाहिए","बिना बताए प्रार्थना करनी चाहिए"],ans:1}, hin:{q:"Mental health issues (depression) ko:",opts:["Hamesha chupana chahiye","Support ke liye shadi se pehle disclose karna chahiye","Ignore karna chahiye","Bina bataye pray karna chahiye"],ans:1} },
+    { en:{q:"Is a public wedding ceremony biblically important?",opts:["No, secret eloping is best","Yes, marriage is a public commitment among witnesses","Only for showing off","Only if you have a huge budget"],ans:1}, hi:{q:"क्या सार्वजनिक विवाह समारोह बाइबिल के अनुसार महत्वपूर्ण है?",opts:["नहीं, छुपकर भागना सबसे अच्छा है","हाँ, विवाह गवाहों के बीच एक सार्वजनिक प्रतिबद्धता है","केवल दिखावे के लिए","केवल तभी जब बजट बड़ा हो"],ans:1}, hin:{q:"Kya public wedding ceremony biblically important hai?",opts:["Nahi, secret bhagna best hai","Haan, marriage witnesses ke beech public commitment hai","Sirf show off ke liye","Sirf agar huge budget ho"],ans:1} },
+    { en:{q:"How does God view the marriage bed?",opts:["It is dirty","It should be kept pure and honored","It is only for having children","It is unimportant"],ans:1}, hi:{q:"परमेश्वर विवाह के बिस्तर को कैसे देखते हैं?",opts:["यह गंदा है","इसे पवित्र रखा जाना चाहिए और सम्मानित किया जाना चाहिए","यह केवल बच्चे पैदा करने के लिए है","यह महत्वहीन है"],ans:1}, hin:{q:"God marriage bed ko kaise dekhte hain?",opts:["Yeh dirty hai","Ise pure aur honor rakhna chahiye","Yeh sirf bacche paida karne ke liye hai","Unimportant hai"],ans:1} },
+    { en:{q:"What book is recommended for understanding how partners receive love?",opts:["The 5 Love Languages","Harry Potter","Rich Dad Poor Dad","The Hobbit"],ans:0}, hi:{q:"पार्टनर प्यार कैसे प्राप्त करते हैं, यह समझने के लिए कौन सी किताब अनुशंसित है?",opts:["The 5 Love Languages","Harry Potter","Rich Dad Poor Dad","The Hobbit"],ans:0}, hin:{q:"Partner love kaise receive karta hai, yeh samajhne ke liye konsi book recommended hai?",opts:["The 5 Love Languages","Harry Potter","Rich Dad Poor Dad","The Hobbit"],ans:0} },
+    { en:{q:"A biblical husband's love should mimic:",opts:["Hollywood movies","Christ's sacrificial love for the Church","A dictator's rule","A boss at work"],ans:1}, hi:{q:"एक बाइबिल के पति का प्रेम कैसा होना चाहिए?",opts:["हॉलीवुड फिल्मों जैसा","कलीसिया के लिए मसीह के बलिदान वाले प्रेम जैसा","तानाशाह के शासन जैसा","बॉस के जैसा"],ans:1}, hin:{q:"Biblical husband ka love kiske jaisa hona chahiye?",opts:["Hollywood movies","Church ke liye Christ ke sacrificial love jaisa","Dictator jaisa","Boss jaisa"],ans:1} },
+    { en:{q:"Can you marry someone with zero physical attraction initially?",opts:["Yes, looks don't matter at all","No, a basic tier of physical compatibility is required","Yes, if parents force you","Yes, money is enough"],ans:1}, hi:{q:"क्या आप शून्य शारीरिक आकर्षण के बावजूद शादी कर सकते हैं?",opts:["हाँ, रूप-रंग बिल्कुल मायने नहीं रखता","नहीं, शारीरिक अनुकूलता का एक बुनियादी स्तर आवश्यक है","हाँ, अगर माता-पिता मजबूर करें","हाँ, पैसा ही काफी है"],ans:1}, hin:{q:"Kya zero physical attraction hone par shadi karni chahiye?",opts:["Haan, looks matter nahi karte","Nahi, basic physical compatibility required hai","Haan, parents force karein toh","Haan, paisa kaafi hai"],ans:1} },
+    { en:{q:"What is 'Missionary Dating'?",opts:["Dating while on a mission trip","Dating a non-believer to convert them","Dating a pastor","Dating multiple people"],ans:1}, hi:{q:"'मिशनरी डेटिंग' क्या है?",opts:["मिशन ट्रिप पर डेटिंग","धर्म परिवर्तन के लिए किसी गैर-विश्वासी को डेट करना","पास्टर को डेट करना","कई लोगों को डेट करना"],ans:1}, hin:{q:"'Missionary Dating' kya hai?",opts:["Mission trip par dating","Convert karne ke liye non-believer ko date karna","Pastor ko date karna","Multiple logo ko date karna"],ans:1} }
+];
+
+/* ================= STATE & LOGIC ================= */
+let currentUser = null;
+let currentLang = 'en';
+let currentQuestionIndex = 0;
+let score = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialization
+});
+
+// View Navigation & Header setup
+function nav(viewId) {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('dashboard-view').classList.add('hidden');
+    document.getElementById('study-view').classList.add('hidden');
+    document.getElementById('quiz-view').classList.add('hidden');
+    
+    document.getElementById(viewId).classList.remove('hidden');
+
+    if (viewId !== 'login-view') {
+        document.getElementById('main-header').classList.remove('hidden');
+    } else {
+        document.getElementById('main-header').classList.add('hidden');
+    }
+    window.scrollTo(0, 0);
+}
+
+// Login
+function handleLogin(e) {
+    e.preventDefault();
+    const name = document.getElementById('user-name').value;
+    const dob = document.getElementById('user-dob').value;
+    const gender = document.getElementById('user-gender').value;
+
+    if (!name || !dob || !gender) return;
+
+    // Age Validation
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+
+    if (age < 18) {
+        document.getElementById('age-error').style.display = 'block';
+        return;
+    }
+    document.getElementById('age-error').style.display = 'none';
+    currentUser = { name, dob, gender };
+    
+    changeLanguage(); // Apply all language settings to dashboard instantly
+    nav('dashboard-view');
+}
+
+function logout() {
+    currentUser = null;
+    document.getElementById('login-form').reset();
+    document.getElementById('dash-score').innerText = "-- / 30";
+    nav('login-view');
+}
+
+// Language Change Logic
+function changeLanguage() {
+    currentLang = document.getElementById('lang-selector').value;
+    const ui = uiTranslations[currentLang];
+    
+    // Dashboard Text
+    if(currentUser) {
+        document.getElementById('welcome-text').innerText = ui.welcome + currentUser.name + "!";
+    }
+    document.getElementById('dash-subtitle').innerText = ui.dashSub;
+    document.getElementById('card1-title').innerText = ui.c1Title;
+    document.getElementById('card1-desc').innerText = ui.c1Desc;
+    document.getElementById('btn-read').innerText = ui.btnRead;
+    document.getElementById('card2-title').innerText = ui.c2Title;
+    document.getElementById('card2-desc').innerText = ui.c2Desc;
+    document.getElementById('btn-test').innerText = ui.btnTest;
+    document.getElementById('card3-title').innerText = ui.c3Title;
+    document.getElementById('card3-desc').innerText = ui.c3Desc;
+    document.getElementById('btn-back-study').innerText = ui.btnBack;
+    document.getElementById('btn-finish-study').innerText = ui.btnFinish;
+    document.getElementById('btn-exit-quiz').innerText = ui.btnExit;
+    document.getElementById('res-title').innerText = ui.resTitle;
+    document.getElementById('res-desc').innerText = ui.resDesc;
+    document.getElementById('btn-return-dash').innerText = ui.btnRetDash;
+    document.getElementById('btn-logout').innerText = ui.btnLogout;
+
+    // Study Content
+    document.getElementById('study-content-container').innerHTML = studyContent[currentLang];
+
+    // Re-render quiz question if currently inside quiz
+    if(!document.getElementById('quiz-view').classList.contains('hidden') && !document.getElementById('quiz-active').classList.contains('hidden')) {
+        // Just reload the same question to swap text (keeping the answered state is complex, so we just update text if it hasn't been answered yet).
+        if(document.getElementById('next-btn').classList.contains('hidden')) {
+            loadQuestion();
+        }
+    }
+}
+
+/* ================= QUIZ LOGIC (30 Qs, Duolingo Style) ================= */
+function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById('quiz-active').classList.remove('hidden');
+    document.getElementById('quiz-results').classList.add('hidden');
+    nav('quiz-view');
+    loadQuestion();
+}
+
+function loadQuestion() {
+    const qData = quizData[currentQuestionIndex][currentLang];
+    document.getElementById('question-text').innerText = qData.q;
+    document.getElementById('q-counter').innerText = `${currentQuestionIndex + 1}/30`;
+    
+    const optionsGrid = document.getElementById('options-grid');
+    optionsGrid.innerHTML = '';
+    
+    qData.opts.forEach((optText, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = optText;
+        btn.onclick = () => selectAnswer(index, btn);
+        optionsGrid.appendChild(btn);
+    });
+
+    document.getElementById('feedback-area').innerHTML = '';
+    document.getElementById('next-btn').classList.add('hidden');
+    
+    const progress = (currentQuestionIndex / 30) * 100;
+    document.getElementById('quiz-progress').style.width = `${progress}%`;
+}
+
+function selectAnswer(selectedIndex, btnElement) {
+    if (!document.getElementById('next-btn').classList.contains('hidden')) return; // already answered
+
+    const correctAns = quizData[currentQuestionIndex][currentLang].ans;
+    const optionsGrid = document.getElementById('options-grid');
+    const buttons = optionsGrid.getElementsByClassName('option-btn');
+    
+    // Disable all
+    for(let b of buttons) { b.disabled = true; }
+
+    if (selectedIndex === correctAns) {
+        btnElement.classList.add('correct');
+        document.getElementById('feedback-area').innerHTML = "✅ Correct!";
+        document.getElementById('feedback-area').style.color = "var(--success)";
+        score++;
+    } else {
+        btnElement.classList.add('wrong');
+        buttons[correctAns].classList.add('correct'); // Reveal correct
+        document.getElementById('feedback-area').innerHTML = "❌ Incorrect";
+        document.getElementById('feedback-area').style.color = "var(--error)";
+    }
+
+    document.getElementById('next-btn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < 30) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById('quiz-progress').style.width = `100%`;
+    document.getElementById('quiz-active').classList.add('hidden');
+    document.getElementById('quiz-results').classList.remove('hidden');
+    
+    document.getElementById('final-score-display').innerText = `${score}/30`;
+    
+    // Color circle based on score
+    const circle = document.getElementById('final-score-display');
+    if(score >= 25) { circle.style.borderColor = "var(--success)"; circle.style.color = "var(--success)"; }
+    else if(score >= 15) { circle.style.borderColor = "#dd6b20"; circle.style.color = "#dd6b20"; }
+    else { circle.style.borderColor = "var(--error)"; circle.style.color = "var(--error)"; }
+
+    document.getElementById('dash-score').innerText = `${score} / 30`;
+}
+
+</script>
+</body>
+</html>
